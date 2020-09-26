@@ -140,11 +140,13 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="framework.h" />
+    <ClInclude Include="gl_app.h" />
     <ClInclude Include="Resource.h" />
     <ClInclude Include="targetver.h" />
     <ClInclude Include="u_t5-gl-1.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="gl_app.cpp" />
     <ClCompile Include="u_t5-gl-1.cpp" />
   </ItemGroup>
   <ItemGroup>

@@ -27,9 +27,15 @@
     <ClInclude Include="u_t5-gl-1.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="gl_app.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="u_t5-gl-1.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="gl_app.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

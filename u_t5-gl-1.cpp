@@ -4,6 +4,12 @@
 #include "framework.h"
 #include "u_t5-gl-1.h"
 
+#include <GL/gl.h>
+#include <KHR/khrplatform.h> // EGL Platform : ogl <==> windows
+#include <GL/glext.h> // OpenGL 1.2 +
+#include <GL/glcorearb.h> // OpenGL core profile / ARB Extensions
+#include <GL/wglext.h> // Windows OpenGL Extension
+
 #define MAX_LOADSTRING 100
 
 // Global Variables:
@@ -16,6 +22,15 @@ ATOM                MyRegisterClass(HINSTANCE hInstance);
 BOOL                InitInstance(HINSTANCE, int);
 LRESULT CALLBACK    WndProc(HWND, UINT, WPARAM, LPARAM);
 INT_PTR CALLBACK    About(HWND, UINT, WPARAM, LPARAM);
+
+// App Defines
+#define UPDATE_TIMER_ID 200 // for timer later
+
+// OpenGL Preps
+HDC hDC = nullptr; // Device Context for the client area of a smt
+HGLRC hRC = nullptr; // Rendering Context
+PFNWGLCHOOSEPIXELFORMATARBPROC wglChoosePixelFormatARB = nullptr; // Pixel Format: opts of FB
+PFNWGLCREATECONTEXTATTRIBSARBPROC wglCreateContextAttribsARB = nullptr; // Context Attribs
 
 int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
                      _In_opt_ HINSTANCE hPrevInstance,

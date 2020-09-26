@@ -13,3 +13,6 @@
 #include <malloc.h>
 #include <memory.h>
 #include <tchar.h>
+
+// Libraries
+#pragma comment(lib, "opengl32.lib")
