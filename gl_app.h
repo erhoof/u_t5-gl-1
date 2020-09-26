@@ -18,3 +18,4 @@ PFNWGLCREATECONTEXTATTRIBSARBPROC wglCreateContextAttribsARB = nullptr; // Conte
 
 void InitScene(); // scene init
 void InitOpenGLExt(HWND hWnd); // OpenGL extensions init
+void InitOpenGL(HWND hWnd); // Init OpenGL Core
