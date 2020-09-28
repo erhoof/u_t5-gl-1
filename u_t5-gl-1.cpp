@@ -4,6 +4,8 @@
 #include "framework.h"
 #include "u_t5-gl-1.h"
 
+#include "gl_app.h"
+
 #define MAX_LOADSTRING 100
 
 // Global Variables:
@@ -142,6 +144,38 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
             }
         }
         break;
+    case WM_ACTIVATE:
+        {
+            int wmId = LOWORD(wParam);
+            // Parse window activate state
+            switch (wmId)
+            {
+            case WA_ACTIVE:
+            case WA_CLICKACTIVE:
+                SetTimer(hWnd,
+                    UPDATE_TIMER_ID,
+                    USER_TIMER_MINIMUM,
+                    (TIMERPROC)&DrawTimer);
+                break;
+            case WA_INACTIVE:
+                KillTimer(hWnd, UPDATE_TIMER_ID);
+                break;
+            default:
+                return DefWindowProc(hWnd, message, wParam, lParam);
+            }
+        }
+        break;
+    case WM_KEYDOWN:
+        {
+           if (wParam == VK_ESCAPE)
+               DestroyWindow(hWnd);
+           break;
+        }
+    case WM_SIZE:
+        {
+            Reshape(LOWORD(lParam), HIWORD(lParam));
+            break;
+        }
     case WM_PAINT:
         {
             PAINTSTRUCT ps;
@@ -151,6 +185,8 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
         }
         break;
     case WM_DESTROY:
+        KillTimer(hWnd, UPDATE_TIMER_ID);
+        DeInitOpenGL(hWnd);
         PostQuitMessage(0);
         break;
     default:

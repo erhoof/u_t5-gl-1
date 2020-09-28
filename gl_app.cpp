@@ -101,7 +101,7 @@ void DeInitOpenGL(HWND hWnd)
 	ReleaseDC(hWnd, hDC);
 }
 
-void Reshape(GLsizei width, GLsizei height, GLint x = 0, GLint y = 0)
+void Reshape(GLsizei width, GLsizei height, GLint x, GLint y)
 {
 	if (!height)
 		return;

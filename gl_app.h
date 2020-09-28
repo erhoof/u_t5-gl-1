@@ -21,7 +21,7 @@ void InitOpenGLExt(HWND hWnd); // OpenGL extensions init
 void InitOpenGL(HWND hWnd); // Init OpenGL Core
 void DeInitOpenGL(HWND hWnd);
 
-void Reshape(GLsizei width, GLsizei height, GLint x = 0, GLint y = 0); // Reshape GL Scene
+void Reshape(GLsizei width, GLsizei height, GLint x, GLint y); // Reshape GL Scene
 void DrawScene(DWORD elapsedTime); // Clear and Redraw GL Scene
 
 // window - WM_TIMER message - Timer identifier - Current System time
