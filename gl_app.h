@@ -10,18 +10,12 @@
 
 #define UPDATE_TIMER_ID 200 // for timer later
 
-// Global Variables
-HDC hDC = nullptr; // Device Context for the client area of a smt
-HGLRC hRC = nullptr; // Rendering Context
-PFNWGLCHOOSEPIXELFORMATARBPROC wglChoosePixelFormatARB = nullptr; // Pixel Format: opts of FB
-PFNWGLCREATECONTEXTATTRIBSARBPROC wglCreateContextAttribsARB = nullptr; // Context Attribs
-
 void InitScene(); // scene init
 void InitOpenGLExt(HWND hWnd); // OpenGL extensions init
 void InitOpenGL(HWND hWnd); // Init OpenGL Core
 void DeInitOpenGL(HWND hWnd);
 
-void Reshape(GLsizei width, GLsizei height, GLint x, GLint y); // Reshape GL Scene
+void Reshape(GLsizei width, GLsizei height, GLint x = 0, GLint y = 0); // Reshape GL Scene
 void DrawScene(DWORD elapsedTime); // Clear and Redraw GL Scene
 
 // window - WM_TIMER message - Timer identifier - Current System time
