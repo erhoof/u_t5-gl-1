@@ -1,12 +1,6 @@
 
 #include "gl_app.h"
 
-// Global Variables
-HDC hDC = nullptr; // Device Context for the client area of a smt
-HGLRC hRC = nullptr; // Rendering Context
-PFNWGLCHOOSEPIXELFORMATARBPROC wglChoosePixelFormatARB = nullptr; // Pixel Format: opts of FB
-PFNWGLCREATECONTEXTATTRIBSARBPROC wglCreateContextAttribsARB = nullptr; // Context Attribs
-
 void InitScene() // scene init
 {
 	glClearColor(0.25f, 1.0f, 0.25f, 0.0f);
