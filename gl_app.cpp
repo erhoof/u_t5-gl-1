@@ -93,3 +93,32 @@ void InitOpenGL(HWND hWnd)
 
 	InitScene();
 }
+
+void DeInitOpenGL(HWND hWnd)
+{
+	wglMakeCurrent(NULL, NULL);
+	wglDeleteContext(hRC);
+	ReleaseDC(hWnd, hDC);
+}
+
+void Reshape(GLsizei width, GLsizei height, GLint x = 0, GLint y = 0)
+{
+	if (!height)
+		return;
+
+	glViewport(x, y, width, height); // Set Viewport
+}
+
+void DrawScene(DWORD elapsedTime)
+{
+	glClear(GL_COLOR_BUFFER_BIT);
+
+	// etc...
+}
+
+void CALLBACK DrawTimer(HWND hWnd, UINT uMsg, UINT_PTR idEvent, DWORD dwTime)
+{
+	DrawScene(dwTime); // Current time
+
+	SwapBuffers(hDC); // Swap screen buffer
+}
