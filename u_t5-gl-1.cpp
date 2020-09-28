@@ -66,19 +66,18 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
 //
 ATOM MyRegisterClass(HINSTANCE hInstance)
 {
-    WNDCLASSEXW wcex;
+    WNDCLASSEXW wcex = { 0 };
 
     wcex.cbSize = sizeof(WNDCLASSEX);
 
-    wcex.style          = CS_HREDRAW | CS_VREDRAW;
+    wcex.style          = CS_OWNDC; // Allocates unique DC
     wcex.lpfnWndProc    = WndProc;
-    wcex.cbClsExtra     = 0;
-    wcex.cbWndExtra     = 0;
+    //wcex.cbClsExtra     = 0;
+    //wcex.cbWndExtra     = 0;
     wcex.hInstance      = hInstance;
     wcex.hIcon          = LoadIcon(hInstance, MAKEINTRESOURCE(IDI_UT5GL1));
     wcex.hCursor        = LoadCursor(nullptr, IDC_ARROW);
-    wcex.hbrBackground  = (HBRUSH)(COLOR_WINDOW+1);
-    wcex.lpszMenuName   = MAKEINTRESOURCEW(IDC_UT5GL1);
+    //wcex.lpszMenuName   = MAKEINTRESOURCEW(IDC_UT5GL1);
     wcex.lpszClassName  = szWindowClass;
     wcex.hIconSm        = LoadIcon(wcex.hInstance, MAKEINTRESOURCE(IDI_SMALL));
 
@@ -99,16 +98,32 @@ BOOL InitInstance(HINSTANCE hInstance, int nCmdShow)
 {
    hInst = hInstance; // Store instance handle in our global variable
 
-   HWND hWnd = CreateWindowW(szWindowClass, szTitle, WS_OVERLAPPEDWINDOW,
-      CW_USEDEFAULT, 0, CW_USEDEFAULT, 0, nullptr, nullptr, hInstance, nullptr);
+   // Overlapping, With TitleBar, With SizingBorder
+   /*HWND hWnd = CreateWindowW(szWindowClass, szTitle, WS_OVERLAPPEDWINDOW,
+       CW_USEDEFAULT, 0, CW_USEDEFAULT, 0, nullptr, nullptr, hInstance, nullptr);*/
+   HWND hWnd = CreateWindowW(szWindowClass,
+       szTitle,
+       WS_OVERLAPPED | WS_SYSMENU | WS_SIZEBOX,
+       CW_USEDEFAULT,
+       0,
+       CW_USEDEFAULT,
+       0,
+       nullptr,
+       nullptr,
+       hInstance,
+       nullptr
+   );
 
    if (!hWnd)
    {
       return FALSE;
    }
 
+   // OpenGL Context
+   InitOpenGLExt(hWnd);
+   InitOpenGL(hWnd);
+
    ShowWindow(hWnd, nCmdShow);
-   UpdateWindow(hWnd);
 
    return TRUE;
 }
@@ -125,6 +140,7 @@ BOOL InitInstance(HINSTANCE hInstance, int nCmdShow)
 //
 LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 {
+
     switch (message)
     {
     case WM_COMMAND:
@@ -176,14 +192,6 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
             Reshape(LOWORD(lParam), HIWORD(lParam));
             break;
         }
-    case WM_PAINT:
-        {
-            PAINTSTRUCT ps;
-            HDC hdc = BeginPaint(hWnd, &ps);
-            // TODO: Add any drawing code that uses hdc here...
-            EndPaint(hWnd, &ps);
-        }
-        break;
     case WM_DESTROY:
         KillTimer(hWnd, UPDATE_TIMER_ID);
         DeInitOpenGL(hWnd);
