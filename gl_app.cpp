@@ -18,7 +18,7 @@ ATOM InitOpenGLExt(HWND hWnd) // OpenGL extensions init
 {
 	hDC = GetDC(hWnd);
 
-	if (hDC)
+	if (!hDC)
 		return 1;
 
 	PIXELFORMATDESCRIPTOR pfd = { 0 }; // Pixel Format description
