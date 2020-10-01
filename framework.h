@@ -16,3 +16,4 @@
 
 // Libraries
 #pragma comment(lib, "opengl32.lib")
+#pragma comment(lib, "../u_t5-gl-1_lib/x64/Debug/u_t5-gl-1_lib.lib")

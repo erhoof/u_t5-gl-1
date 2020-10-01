@@ -6,6 +6,8 @@
 
 #include "gl_app.h"
 
+#include "../u_t5-gl-1_lib/eGL.h"
+
 #define MAX_LOADSTRING 100
 
 // Global Variables:
@@ -148,8 +150,10 @@ BOOL InitInstance(HINSTANCE hInstance, int nCmdShow)
        _tprintf(_T("Hotkey 'CTRL+Q' defined with MOD_NOREPEAT flag\n"));
    }
 
-
    ShowWindow(hWnd, nCmdShow);
+
+   // Lib u_t5-gl-1_lib 
+   eGL::returnOne();
 
    return TRUE;
 }
