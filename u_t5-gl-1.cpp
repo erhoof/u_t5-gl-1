@@ -137,6 +137,18 @@ BOOL InitInstance(HINSTANCE hInstance, int nCmdShow)
        ExitProcess(-1);
    }
 
+   // Add Hotkey CTRL+Q
+   if (RegisterHotKey(
+       hWnd,
+       1, //ID
+       MOD_CONTROL | MOD_NOREPEAT,
+       0x51 // Q key
+   ))
+   {
+       _tprintf(_T("Hotkey 'CTRL+Q' defined with MOD_NOREPEAT flag\n"));
+   }
+
+
    ShowWindow(hWnd, nCmdShow);
 
    return TRUE;
@@ -197,9 +209,15 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
         break;
     case WM_KEYDOWN:
         {
-           if (wParam == VK_ESCAPE)
-               DestroyWindow(hWnd);
-           break;
+            if (wParam == VK_ESCAPE)
+                DestroyWindow(hWnd);
+            break;
+        }
+    case WM_HOTKEY:
+        {
+            if (wParam == 1)
+                PostQuitMessage(WM_CLOSE);
+            break;
         }
     case WM_SIZE:
         {
