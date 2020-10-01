@@ -72,12 +72,9 @@ ATOM MyRegisterClass(HINSTANCE hInstance)
 
     wcex.style          = CS_OWNDC; // Allocates unique DC
     wcex.lpfnWndProc    = WndProc;
-    //wcex.cbClsExtra     = 0;
-    //wcex.cbWndExtra     = 0;
     wcex.hInstance      = hInstance;
     wcex.hIcon          = LoadIcon(hInstance, MAKEINTRESOURCE(IDI_UT5GL1));
     wcex.hCursor        = LoadCursor(nullptr, IDC_ARROW);
-    //wcex.lpszMenuName   = MAKEINTRESOURCEW(IDC_UT5GL1);
     wcex.lpszClassName  = szWindowClass;
     wcex.hIconSm        = LoadIcon(wcex.hInstance, MAKEINTRESOURCE(IDI_SMALL));
 
@@ -118,10 +115,27 @@ BOOL InitInstance(HINSTANCE hInstance, int nCmdShow)
    {
       return FALSE;
    }
-
+   
    // OpenGL Context
-   InitOpenGLExt(hWnd);
-   InitOpenGL(hWnd);
+   switch (InitOpenGLExt(hWnd))
+   {
+   case 1:
+       MessageBox(hWnd, L"Could not init Device Context", L"DC error.", MB_ICONERROR);
+       ExitProcess(-1);
+       break;
+   case 2:
+       MessageBox(hWnd, L"Could not get OpenGL extensions", L"Extensions error.", MB_ICONERROR);
+       ExitProcess(-1);
+       break;
+   default:
+       break;
+   }
+
+   if (InitOpenGL(hWnd) == 1)
+   {
+       MessageBox(hWnd, L"Could not create Rendering Context", L"RC error.", MB_ICONERROR);
+       ExitProcess(-1);
+   }
 
    ShowWindow(hWnd, nCmdShow);
 

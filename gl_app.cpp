@@ -14,9 +14,12 @@ void InitScene() // scene init
 	// TODO: other init stuff
 }
 
-void InitOpenGLExt(HWND hWnd) // OpenGL extensions init
+ATOM InitOpenGLExt(HWND hWnd) // OpenGL extensions init
 {
 	hDC = GetDC(hWnd);
+
+	if (hDC)
+		return 1;
 
 	PIXELFORMATDESCRIPTOR pfd = { 0 }; // Pixel Format description
 	pfd.nSize = sizeof(PIXELFORMATDESCRIPTOR); // Structure size
@@ -45,11 +48,16 @@ void InitOpenGLExt(HWND hWnd) // OpenGL extensions init
 	wglCreateContextAttribsARB = (PFNWGLCREATECONTEXTATTRIBSARBPROC)
 		wglGetProcAddress("wglCreateContextAttribsARB");
 
+	if (!wglChoosePixelFormatARB || !wglCreateContextAttribsARB)
+		return 2;
+
 	wglMakeCurrent(NULL, NULL);
 	wglDeleteContext(hrcFake);
+
+	return 0;
 }
 
-void InitOpenGL(HWND hWnd)
+ATOM InitOpenGL(HWND hWnd)
 {
 	GLint pixelFormat = 0;
 	GLuint numFormats = 0;
@@ -93,6 +101,9 @@ void InitOpenGL(HWND hWnd)
 
 	// Create rendering context
 	hRC = wglCreateContextAttribsARB(hDC, 0, contextAttribVersion);
+
+	if (!hRC)
+		return 1; // Error handling
 
 	// Make cur context
 	wglMakeCurrent(hDC, hRC);

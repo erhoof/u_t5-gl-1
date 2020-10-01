@@ -11,8 +11,8 @@
 #define UPDATE_TIMER_ID 200 // for timer later
 
 void InitScene(); // scene init
-void InitOpenGLExt(HWND hWnd); // OpenGL extensions init
-void InitOpenGL(HWND hWnd); // Init OpenGL Core
+ATOM InitOpenGLExt(HWND hWnd); // OpenGL extensions init
+ATOM InitOpenGL(HWND hWnd); // Init OpenGL Core
 void DeInitOpenGL(HWND hWnd);
 
 void Reshape(GLsizei width, GLsizei height, GLint x = 0, GLint y = 0); // Reshape GL Scene
