@@ -4,11 +4,10 @@
 #include "framework.h"
 #include "u_t5-gl-1.h"
 
-#include "gl_app.h"
-
 #include "../u_t5-gl-1_lib/eGL.h"
 
 #define MAX_LOADSTRING 100
+#define UPDATE_TIMER_ID 200 // for timer later
 
 // Global Variables:
 HINSTANCE hInst;                                // current instance
@@ -119,7 +118,7 @@ BOOL InitInstance(HINSTANCE hInstance, int nCmdShow)
    }
    
    // OpenGL Context
-   switch (InitOpenGLExt(hWnd))
+   switch (eGL::InitOpenGLExt(hWnd))
    {
    case 1:
        MessageBox(hWnd, L"Could not init Device Context", L"DC error.", MB_ICONERROR);
@@ -133,7 +132,7 @@ BOOL InitInstance(HINSTANCE hInstance, int nCmdShow)
        break;
    }
 
-   if (InitOpenGL(hWnd) == 1)
+   if (eGL::InitOpenGL(hWnd) == 1)
    {
        MessageBox(hWnd, L"Could not create Rendering Context", L"RC error.", MB_ICONERROR);
        ExitProcess(-1);
@@ -151,9 +150,6 @@ BOOL InitInstance(HINSTANCE hInstance, int nCmdShow)
    }
 
    ShowWindow(hWnd, nCmdShow);
-
-   // Lib u_t5-gl-1_lib 
-   eGL::returnOne();
 
    return TRUE;
 }
@@ -201,7 +197,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
                 SetTimer(hWnd,
                     UPDATE_TIMER_ID,
                     USER_TIMER_MINIMUM,
-                    (TIMERPROC)&DrawTimer);
+                    (TIMERPROC)&eGL::DrawTimer);
                 break;
             case WA_INACTIVE:
                 KillTimer(hWnd, UPDATE_TIMER_ID);
@@ -225,12 +221,12 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
         }
     case WM_SIZE:
         {
-            Reshape(LOWORD(lParam), HIWORD(lParam));
+            eGL::Reshape(LOWORD(lParam), HIWORD(lParam));
             break;
         }
     case WM_DESTROY:
         KillTimer(hWnd, UPDATE_TIMER_ID);
-        DeInitOpenGL(hWnd);
+        eGL::DeInitOpenGL(hWnd);
         PostQuitMessage(0);
         break;
     default:
